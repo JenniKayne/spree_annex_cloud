@@ -6,6 +6,6 @@ Spree::Variant.class_eval do
   end
 
   def annex_cloud_points_required
-    @annex_cloud_points_required ||= annex_cloud_reward.present? ? annex_cloud_reward.points_required : 0
+    @annex_cloud_points_required ||= annex_cloud_reward? ? annex_cloud_reward.points_required : 0
   end
 end
