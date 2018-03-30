@@ -1,0 +1,39 @@
+<div class="page account content__wrapper" data-view="account">
+  <%= render partial: 'spree/shared/account_nav', locals: { home: false } %>
+  <div class="account__main">
+    <div id="socialannex_dashboard"></div>
+
+    <br><br>
+    <section class="account__section form__cell form__cell--half">
+      <header class="account__section__header">
+        <h1 class="heading--2">Select your reward</h1>
+      </header>
+      <% Spree::AnnexCloudReward.all.each do |reward| %>
+        <%= form_for :ac, url: api_redeem_reward_url(format: :html) do |f| %>
+          <%= hidden_field_tag :reward_id, reward.annex_cloud_id %>
+          <div class="form__cell form__cell--half">
+            <%= f.button reward.name, class: :button %>
+          </div>
+        <% end %><br>
+      <% end %>
+    </section>
+  </div>
+</div>
+<% if current_spree_user.present? %>
+<script type="text/javascript">
+  var sa_uni = sa_uni || [];
+  var sa_emailid = "<%= current_spree_user.email %>";
+  sa_uni.push(['sa_pg', '5']);
+  (function() { function sa_async_load(){
+    var sa = document.createElement('script');
+    sa.type = 'text/javascript';
+    sa.async = true;
+    sa.src = '//cdn.socialannex.com/partner/<%= Rails.application.secrets.annex_cloud_site_id %>/universal.js'; var sax = document.getElementsByTagName('script')[0]; sax.parentNode.insertBefore(sa, sax);
+  }
+  if (window.attachEvent) {
+    window.attachEvent('onload', sa_async_load());
+  } else {
+    window.addEventListener('load', sa_async_load(),false); }
+  })();
+</script>
+<% end %>

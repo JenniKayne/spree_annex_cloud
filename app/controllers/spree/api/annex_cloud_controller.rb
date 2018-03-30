@@ -7,17 +7,28 @@ module Spree
       before_action :load_reward, only: :create
 
       def create
-        if create_allowed
-          create_perform
+        result = if create_allowed
+                   create_perform
 
-          if @error
-            render json: json_error(@error)
-          else
-            @order.update_with_updater!
-            render json: json_success
+                   if @error
+                     json_error(@error)
+                   else
+                     @order.update_with_updater!
+                     json_success
+                   end
+                 else
+                   json_error(Spree.t('annex_cloud.not_enough_points'))
+                 end
+        respond_to do |format|
+          format.html do
+            if result[:message].present?
+              flash[:error] = result[:message]
+            else
+              flash[:success] = Spree.t('annex_cloud.reward_added_to_cart', name: @reward.product.name)
+            end
+            redirect_to :rewards_dashboard
           end
-        else
-          render json: json_error(Spree.t('annex_cloud.not_enough_points'))
+          format.json { render json: result }
         end
       end
 
@@ -30,7 +41,7 @@ module Spree
       end
 
       def create_perform
-        @order.contents.add(@reward.variant, 1, param_options)
+        @line_item = @order.contents.add(@reward.variant, 1, param_options)
       rescue ActiveRecord::RecordInvalid => error
         @error = error.record.errors.full_messages.join(', ')
       rescue StandardError => error
