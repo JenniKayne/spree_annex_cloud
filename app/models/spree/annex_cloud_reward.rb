@@ -3,6 +3,8 @@ module Spree
     belongs_to :variant
     scope :active, -> { where(active: true) }
 
+    delegate :product, to: :variant
+
     # Import rewards from AnnexCloud
     def self.import
       url = "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}v2/rewardlist/#{SpreeAnnexCloud.configuration.site_id}"
