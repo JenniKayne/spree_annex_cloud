@@ -4,12 +4,16 @@ require 'spree_annex_cloud/engine'
 require 'spree_annex_cloud/version'
 
 module SpreeAnnexCloud
+  ANNEX_CLOUD_API_BASE_URL = 'https://s15.socialannex.net/api'
+
   class Configuration
     attr_accessor :access_token
+    attr_accessor :enabled
     attr_accessor :site_id
 
     def initialize
       @access_token = ''
+      @enabled = false
       @site_id = ''
     end
   end
