@@ -13,6 +13,10 @@ module Spree
         nil
       end
 
+      def api_user_url_by_email(custom_email)
+        "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/user/#{SpreeAnnexCloud.configuration.site_id}/#{custom_email}"
+      end
+
       def annex_cloud_post(url, params = {})
         response = HTTParty.post url, query: params.merge(access_token: SpreeAnnexCloud.configuration.access_token)
         return if response.blank?

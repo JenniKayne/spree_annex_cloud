@@ -6,8 +6,32 @@ Spree::User.class_eval do
   after_create :synchronize_annex_cloud_agree_attribute
   after_update :synchronize_annex_cloud_agree_attribute
 
+  def annex_cloud_register_try
+    return true if annex_cloud_registered?
+
+    resource = Spree::AnnexCloudUser.annex_cloud_resource_by_email(email)
+    return false if resource.blank?
+
+    if annex_cloud_user.present? && !annex_cloud_user.registered?
+      annex_cloud_user.update(
+        annex_cloud_id: resource['user_id'],
+        email: email
+      )
+    else
+      update_column(:annex_cloud_agree, true) unless annex_cloud_agree
+      if annex_cloud_user.blank?
+        update(
+          annex_cloud_user: Spree::AnnexCloudUser.create!(
+            annex_cloud_id: resource['user_id'],
+            email: email
+          )
+        )
+      end
+    end
+  end
+
   def annex_cloud_registered?
-    annex_cloud_user.present?
+    annex_cloud_user.present? && annex_cloud_user.registered?
   end
 
   def annex_cloud_available_points
@@ -15,11 +39,11 @@ Spree::User.class_eval do
   end
 
   def synchronize_annex_cloud_agree_attribute
-    return unless saved_change_to_annex_cloud_agree? &&
-        annex_cloud_agree &&
-        annex_cloud_user.nil?
+    return unless saved_change_to_annex_cloud_agree? && annex_cloud_agree
 
-    update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email)
+    unless annex_cloud_user.present?
+      update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email)
+    end
     annex_cloud_user.register
   end
 end
