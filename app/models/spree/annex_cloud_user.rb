@@ -24,8 +24,8 @@ module Spree
       }
 
       response = annex_cloud_post(api_user_url, params)
-      if response
-        update(annex_cloud_id: response['id']) if response.present?
+      if response.present?
+        update(annex_cloud_id: response['id'])
       elsif response == false
         # Probably user already registered
         user.annex_cloud_register_try
