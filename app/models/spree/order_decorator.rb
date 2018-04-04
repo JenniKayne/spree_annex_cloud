@@ -51,7 +51,7 @@ Spree::Order.class_eval do
     line_items.
       select(&:annex_cloud_reward?).each do |line|
         variant = line.variant
-        reward_id = variant.annex_cloud_reward.id
+        reward_id = variant.annex_cloud_reward.annex_cloud_id
         rewards[reward_id] ||= { rid: reward_id, quantity: 0, sku: variant.sku }
         rewards[reward_id][:quantity] += line.quantity
       end
