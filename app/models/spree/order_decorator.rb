@@ -1,5 +1,16 @@
 Spree::Order.class_eval do
   register_line_item_comparison_hook :line_item_reject_match_for_annex_cloud_rewards
+  after_update :annex_cloud_after_cancel
+
+  def annex_cloud_after_cancel
+    return unless saved_change_to_state? && state == 'canceled' && annex_cloud_reward?
+    return unless user.present? && user.annex_cloud_registered?
+
+    user.annex_cloud_user.add_points(
+      annex_cloud_points_required,
+      reason: "Order ##{number} cancel"
+    )
+  end
 
   def annex_cloud_pixel_params
     {
