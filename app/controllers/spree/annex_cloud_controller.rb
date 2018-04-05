@@ -9,8 +9,11 @@ module Spree
     protected
 
     def authorize_current_spree_user
-      redirect_to '/login?refer=true' if current_spree_user.nil?
-      current_spree_user.annex_cloud_register_try
+      if current_spree_user.nil?
+        redirect_to '/login?refer=true'
+      else
+        current_spree_user.annex_cloud_register_try
+      end
     end
   end
 end
