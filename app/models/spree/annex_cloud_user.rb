@@ -3,6 +3,15 @@ module Spree
     include Spree::AnnexCloudUser::Api
     belongs_to :user
 
+    def add_points(points, params = {})
+      request_params = params.merge(
+        action_id: 100,
+        action_use: 4,
+        earned_points: points
+      )
+      annex_cloud_post(api_userpoints_url, request_params)
+    end
+
     def annex_cloud_resource
       @annex_cloud_resource ||= annex_cloud_get(api_user_url) if email.present?
     end

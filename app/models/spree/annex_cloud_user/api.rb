@@ -18,7 +18,7 @@ module Spree
       end
 
       def annex_cloud_post(url, params = {})
-        response = HTTParty.post url, query: params.merge(access_token: SpreeAnnexCloud.configuration.access_token)
+        response = HTTParty.post url, query: { access_token: SpreeAnnexCloud.configuration.access_token }, body: params
         return if response.blank?
 
         response['errorcode'] == '0' ? response : false
@@ -28,6 +28,10 @@ module Spree
 
       def api_user_url
         "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/user/#{SpreeAnnexCloud.configuration.site_id}/#{email}"
+      end
+
+      def api_userpoints_url
+        "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/userpoints/#{SpreeAnnexCloud.configuration.site_id}/#{email}"
       end
     end
   end
