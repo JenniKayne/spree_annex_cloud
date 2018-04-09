@@ -64,7 +64,7 @@ Spree::Order.class_eval do
         variant = line.variant
         reward_id = variant.annex_cloud_reward.annex_cloud_id
         rewards[reward_id] ||= { rid: reward_id, qty: 0, pid: variant.sku }
-        rewards[reward_id][:quantity] += line.quantity
+        rewards[reward_id][:qty] += line.quantity
       end
     rewards.values.each_with_index.map { |reward, index| [index, reward] }.to_h
   end
