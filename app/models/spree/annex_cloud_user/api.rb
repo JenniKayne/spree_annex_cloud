@@ -33,6 +33,10 @@ module Spree
       def api_userpoints_url
         "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/userpoints/#{SpreeAnnexCloud.configuration.site_id}/#{email}"
       end
+
+      def api_tier_url
+        "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/lifetimepointsusertier/#{SpreeAnnexCloud.configuration.site_id}/#{email}"
+      end
     end
   end
 end

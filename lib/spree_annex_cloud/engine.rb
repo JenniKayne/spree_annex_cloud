@@ -16,5 +16,12 @@ module SpreeAnnexCloud
     end
 
     config.to_prepare(&method(:activate).to_proc)
+
+    config.after_initialize do
+      Rails.application.config.spree.promotions.rules.concat [
+        Spree::Promotion::Rules::AnnexCloudRegistered,
+        Spree::Promotion::Rules::AnnexCloudTier
+      ]
+    end
   end
 end

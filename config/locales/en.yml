@@ -1,6 +1,18 @@
 en:
   spree:
     annex_cloud:
-      join: Join Jenni Kayne Rewards
+      join: Join the Reward Program
       not_enough_points: Not enough points to redeem the reward
       reward_added_to_cart: "%{name} has been added"
+    eligibility_errors:
+      messages:
+        user_not_registered_in_annex_cloud: Not registered for the Reward Program
+        no_annex_cloud_tier_match: Tier doesn't match
+    promotion_rule_types:
+      annex_cloud_registered:
+        description: Customer is registered for the Reward Program
+        name: Registered for the Reward Program
+      annex_cloud_tier:
+        description: Customer is registered for the Reward Program and has reached selected Tier
+        name: Registered for the Reward Program with selected Tier
+    required_tier: Required Tier
