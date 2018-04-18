@@ -1,0 +1,10 @@
+<div class="panel-body">
+  <div class="row no-marginb">
+    <div class="form-group col-xs-12 col-md-6 no-marginb">
+      <label><%= Spree.t(:required_tier) %></label>
+      <%= select_tag "#{param_prefix}[preferred_tier]",
+                     options_for_select(%w[Beige Blush Black], promotion_rule.preferred_tier),
+                     { class: 'select2 select_item_total marginb' } %>
+    </div>
+  </div>
+</div>

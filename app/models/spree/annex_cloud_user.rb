@@ -9,11 +9,17 @@ module Spree
         action_use: 4,
         earned_points: points
       )
+      clear_cache
       annex_cloud_post(api_userpoints_url, request_params)
     end
 
     def annex_cloud_resource
       @annex_cloud_resource ||= annex_cloud_get(api_user_url) if email.present?
+    end
+
+    def clear_cache
+      Rails.cache.delete("annex_cloud/user/available_points/#{user_id}")
+      Rails.cache.delete("annex_cloud/user/tier/#{user_id}")
     end
 
     def self.annex_cloud_resource_by_email(custom_email)
@@ -22,7 +28,9 @@ module Spree
     end
 
     def available_points
-      annex_cloud_resource.blank? ? 0 : annex_cloud_resource[:available_points].to_i
+      @available_points ||= Rails.cache.fetch("annex_cloud/user/available_points/#{user_id}", expires_in: 1.hour) do
+        annex_cloud_resource.blank? ? 0 : annex_cloud_resource[:available_points].to_i
+      end
     end
 
     def register
@@ -44,6 +52,14 @@ module Spree
 
     def registered?
       annex_cloud_id.present?
+    end
+
+    def tier
+      return if email.blank?
+      @tier ||= Rails.cache.fetch("annex_cloud/user/tier/#{user_id}", expires_in: 1.hour) do
+        resource = annex_cloud_get(api_tier_url)
+        resource[:current_tier] if resource.present?
+      end
     end
   end
 end
