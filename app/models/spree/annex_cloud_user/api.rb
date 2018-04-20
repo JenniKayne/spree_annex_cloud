@@ -35,6 +35,10 @@ module Spree
         nil
       end
 
+      def api_opt_in_url
+        "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/userstatus/#{SpreeAnnexCloud.configuration.site_id}/#{email}"
+      end
+
       def api_user_url
         "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/user/#{SpreeAnnexCloud.configuration.site_id}/#{email}"
       end

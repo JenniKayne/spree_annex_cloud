@@ -33,15 +33,6 @@ module Spree
       end
     end
 
-    def update_resource
-      params = {
-        first_name: user.firstname,
-        last_name: user.lastname,
-        birth_date: (user.birthday.strftime('%Y-%m-%d') unless user.birthday.nil?)
-      }
-      annex_cloud_put(api_user_url, params).present?
-    end
-
     def register
       params = {
         first_name: user.firstname,
@@ -52,6 +43,7 @@ module Spree
       response = annex_cloud_post(api_user_url, params)
       if response.present?
         update(annex_cloud_id: response['id'])
+        update_opt_in
       elsif response == false
         # Probably user already registered
         user.annex_cloud_register_try
@@ -69,6 +61,19 @@ module Spree
         resource = annex_cloud_get(api_tier_url)
         resource[:current_tier] if resource.present?
       end
+    end
+
+    def update_opt_in
+      annex_cloud_put(api_opt_in_url, status: 1).present?
+    end
+
+    def update_resource
+      params = {
+        first_name: user.firstname,
+        last_name: user.lastname,
+        birth_date: (user.birthday.strftime('%Y-%m-%d') unless user.birthday.nil?)
+      }
+      annex_cloud_put(api_userpoints_url, params).present?
     end
   end
 end

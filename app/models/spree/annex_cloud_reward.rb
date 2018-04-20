@@ -7,7 +7,7 @@ module Spree
 
     # Import rewards from AnnexCloud
     def self.import
-      url = "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}v2/rewardlist/#{SpreeAnnexCloud.configuration.site_id}"
+      url = "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/rewardlist/#{SpreeAnnexCloud.configuration.site_id}"
       response = HTTParty.get url, query: { access_token: SpreeAnnexCloud.configuration.access_token }
       return if response.blank? ||
           response['error_code'] != '0' ||
