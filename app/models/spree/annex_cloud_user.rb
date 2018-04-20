@@ -33,6 +33,15 @@ module Spree
       end
     end
 
+    def update_resource
+      params = {
+        first_name: user.firstname,
+        last_name: user.lastname,
+        birth_date: (user.birthday.strftime('%Y-%m-%d') unless user.birthday.nil?)
+      }
+      annex_cloud_put(api_user_url, params).present?
+    end
+
     def register
       params = {
         first_name: user.firstname,
