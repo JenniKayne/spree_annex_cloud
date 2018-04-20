@@ -73,7 +73,7 @@ module Spree
         last_name: user.lastname,
         birth_date: (user.birthday.strftime('%Y-%m-%d') unless user.birthday.nil?)
       }
-      annex_cloud_put(api_userpoints_url, params).present?
+      annex_cloud_put(api_user_url, params).present?
     end
   end
 end
