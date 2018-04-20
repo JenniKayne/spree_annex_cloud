@@ -4,7 +4,7 @@ require 'spree_annex_cloud/engine'
 require 'spree_annex_cloud/version'
 
 module SpreeAnnexCloud
-  ANNEX_CLOUD_API_BASE_URL = 'https://s15.socialannex.net/api'
+  ANNEX_CLOUD_API_BASE_URL = 'https://s15.socialannex.net/apiv2'
 
   class Configuration
     attr_accessor :access_token

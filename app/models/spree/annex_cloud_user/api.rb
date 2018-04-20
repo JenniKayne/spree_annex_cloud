@@ -4,7 +4,7 @@ module Spree
       def annex_cloud_get(url, params = {})
         response = HTTParty.get url, query: params.merge(access_token: SpreeAnnexCloud.configuration.access_token)
         return if response.blank?
-        if response['errorcode'] == '0'
+        if response['error_code'] == '0'
           response['data'].present? ? response['data'].with_indifferent_access : true
         else
           false
@@ -21,9 +21,22 @@ module Spree
         response = HTTParty.post url, query: { access_token: SpreeAnnexCloud.configuration.access_token }, body: params
         return if response.blank?
 
-        response['errorcode'] == '0' ? response : false
+        response['error_code'] == '0' ? response : false
       rescue StandardError
         nil
+      end
+
+      def annex_cloud_put(url, params = {})
+        response = HTTParty.put url, query: { access_token: SpreeAnnexCloud.configuration.access_token }, body: params
+        return if response.blank?
+
+        response['error_code'] == '0' ? response : false
+      rescue StandardError
+        nil
+      end
+
+      def api_opt_in_url
+        "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/userstatus/#{SpreeAnnexCloud.configuration.site_id}/#{email}"
       end
 
       def api_user_url
