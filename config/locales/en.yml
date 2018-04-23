@@ -1,6 +1,7 @@
 en:
   spree:
     annex_cloud:
+      add_purchase_product: Please add at least one product for purchase to redeem your reward
       join: Join the Reward Program
       not_enough_points: Not enough points to redeem the reward
       reward_added_to_cart: "%{name} has been added"
