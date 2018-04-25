@@ -5,12 +5,16 @@ module Spree
         response = HTTParty.get url, query: params.merge(access_token: SpreeAnnexCloud.configuration.access_token)
         return if response.blank?
         if response['error_code'] == '0'
-          response['data'].present? ? response['data'].with_indifferent_access : true
+          response['data'].present? ? response['data'].with_indifferent_access : response.with_indifferent_access
         else
           false
         end
       rescue StandardError
         nil
+      end
+
+      def api_opt_in_url_by_email(custom_email)
+        "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/userstatus/#{SpreeAnnexCloud.configuration.site_id}/#{custom_email}"
       end
 
       def api_user_url_by_email(custom_email)
