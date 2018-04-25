@@ -8,10 +8,10 @@ module SpreeAnnexCloud
   end
 
   module VERSION
-    MAJOR = 0
+    MAJOR = 1
     MINOR = 0
-    TINY  = 1
-    PRE   = 'alpha'.freeze
+    TINY  = 0
+    PRE   = 'stable'.freeze
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
   end
