@@ -27,6 +27,11 @@ module Spree
       class_instance.annex_cloud_get class_instance.api_user_url_by_email(custom_email)
     end
 
+    def self.annex_cloud_opt_in_by_email(custom_email)
+      class_instance = new
+      class_instance.annex_cloud_get class_instance.api_opt_in_url_by_email(custom_email)
+    end
+
     def available_points
       @available_points ||= Rails.cache.fetch("annex_cloud/user/available_points/#{user_id}", expires_in: 1.hour) do
         annex_cloud_resource.blank? ? 0 : annex_cloud_resource[:available_points].to_i

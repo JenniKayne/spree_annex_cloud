@@ -13,6 +13,9 @@ Spree::User.class_eval do
     resource = Spree::AnnexCloudUser.annex_cloud_resource_by_email(email)
     return false if resource.blank?
 
+    opt_in_resource = Spree::AnnexCloudUser.annex_cloud_opt_in_by_email(email)
+    return false if opt_in_resource.blank? || opt_in_resource[:explicit_status].blank? || opt_in_resource[:explicit_status].to_i.zero?
+
     if annex_cloud_user.present? && !annex_cloud_user.registered?
       annex_cloud_user.update(
         annex_cloud_id: resource['user_id'],
