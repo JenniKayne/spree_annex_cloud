@@ -12,7 +12,9 @@ module Spree
 
         def eligible?(order, _options = {})
           validate_annex_cloud_user(order)
-          validate_annex_cloud_tier(order, preferred_tier)
+          if eligibility_errors.empty?
+            validate_annex_cloud_tier(order, preferred_tier)
+          end
           eligibility_errors.empty?
         end
       end
