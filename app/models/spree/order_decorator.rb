@@ -22,7 +22,7 @@ Spree::Order.class_eval do
       fname: user.try(:firstname),
       lname: user.try(:lastname),
       sale_amount: total - gift_card_payment_total,
-      order_discount: adjustments.promotion.sum(&:amount) + gift_card_payment_total,
+      order_discount: adjustments.promotion.sum(&:amount).abs + gift_card_payment_total,
       coupon: promo_code,
       rewards_applied: annex_cloud_reward_json,
       exclude_products: annex_cloud_product_json
