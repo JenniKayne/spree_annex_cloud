@@ -25,7 +25,6 @@ Spree::User.class_eval do
       update_column(:annex_cloud_agree, true) unless annex_cloud_agree
       if annex_cloud_user.blank?
         update(annex_cloud_user: Spree::AnnexCloudUser.create!(annex_cloud_id: resource['user_id'], email: email))
-        annex_cloud_user.update_opt_in
       end
     end
   end
