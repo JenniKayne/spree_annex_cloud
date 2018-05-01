@@ -27,6 +27,7 @@ Spree::User.class_eval do
         update(annex_cloud_user: Spree::AnnexCloudUser.create!(annex_cloud_id: resource['user_id'], email: email))
       end
     end
+    SpreeAnnexCloud::UpdateAnnexCloudResource.perform_later annex_cloud_user
   end
 
   def annex_cloud_registered?
