@@ -3,7 +3,7 @@ Spree::User.class_eval do
 
   delegate :email, to: :annex_cloud_user, prefix: :annex_cloud
 
-  after_create :synchronize_annex_cloud_agree_attribute
+  after_create :synchronize_annex_cloud_agree_attribute_after_create
   after_update :synchronize_annex_cloud_agree_attribute
   after_update :synchronize_annex_cloud_resource
 
@@ -44,7 +44,14 @@ Spree::User.class_eval do
     unless annex_cloud_user.present?
       update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email)
     end
-    annex_cloud_user.register
+    annex_cloud_user.register(opt_in: false)
+  end
+
+  def synchronize_annex_cloud_agree_attribute_after_create
+    unless annex_cloud_user.present?
+      update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email)
+    end
+    annex_cloud_user.register(opt_in: annex_cloud_user)
   end
 
   def synchronize_annex_cloud_resource

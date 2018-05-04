@@ -38,8 +38,8 @@ module Spree
       end
     end
 
-    def register
-      params = {
+    def register(params)
+      user_params = {
         first_name: user.firstname,
         last_name: user.lastname,
         birth_date: (user.birthday.strftime('%Y-%m-%d') unless user.birthday.nil?)
@@ -48,7 +48,7 @@ module Spree
       response = annex_cloud_post(api_user_url, params)
       if response.present?
         update(annex_cloud_id: response['id'])
-        update_opt_in
+        update_opt_in if params[:opt_in].present?
       elsif response == false
         # Probably user already registered
         user.annex_cloud_register_try
