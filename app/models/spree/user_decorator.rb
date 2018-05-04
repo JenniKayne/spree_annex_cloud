@@ -51,7 +51,7 @@ Spree::User.class_eval do
     unless annex_cloud_user.present?
       update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email)
     end
-    annex_cloud_user.register(opt_in: annex_cloud_user)
+    annex_cloud_user.register(opt_in: annex_cloud_agree)
   end
 
   def synchronize_annex_cloud_resource
