@@ -55,10 +55,7 @@ Spree::Order.class_eval do
   end
 
   def annex_cloud_reward_valid?
-    user.nil? ||
-      annex_cloud_points_required == 0 ||
-      annex_cloud_points_required <= user.annex_cloud_available_points
-
+    annex_cloud_points_required.zero? || (annex_cloud_points_required <= user&.annex_cloud_available_points.to_i)
   end
 
   def annex_cloud_reward_products_valid?
