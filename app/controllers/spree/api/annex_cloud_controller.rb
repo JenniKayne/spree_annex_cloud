@@ -22,7 +22,7 @@ module Spree
         respond_to do |format|
           format.html do
             unless result[:success]
-              flash[:error] = result[:message]
+              flash[:error] = result[:error]
             else
               flash[:success] = Spree.t('annex_cloud.reward_added_to_cart', name: @reward.product.name)
             end
