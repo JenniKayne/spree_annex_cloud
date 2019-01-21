@@ -21,7 +21,7 @@ module Spree
                  end
         respond_to do |format|
           format.html do
-            if result[:message].present?
+            unless result[:success]
               flash[:error] = result[:message]
             else
               flash[:success] = Spree.t('annex_cloud.reward_added_to_cart', name: @reward.product.name)
