@@ -25,8 +25,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'spree_extension'
   s.add_dependency 'exception_notification'
   s.add_dependency 'slack-notifier'
+  s.add_dependency 'rack-cors'
 
   s.add_development_dependency 'appraisal'
+  s.add_development_dependency 'pry-rails'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'capybara-screenshot'
   s.add_development_dependency 'coffee-rails'

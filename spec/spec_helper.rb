@@ -96,4 +96,11 @@ RSpec.configure do |config|
 
   config.fail_fast = ENV['FAIL_FAST'] || false
   config.order = "random"
+
+  SpreeAnnexCloud.configure do |config|
+    config.enabled = true
+    config.site_id = 'random'
+    config.access_token = 'token'
+  end
+
 end
