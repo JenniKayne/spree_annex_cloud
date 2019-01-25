@@ -4,6 +4,7 @@ module Spree
       def annex_cloud_get(url, params = {})
         response = HTTParty.get url, query: params.merge(access_token: SpreeAnnexCloud.configuration.access_token)
         return if response.blank?
+
         if response['error_code'] == '0'
           response['data'].present? ? response['data'].with_indifferent_access : response.with_indifferent_access
         else

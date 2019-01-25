@@ -10,8 +10,8 @@ module Spree
       url = "#{SpreeAnnexCloud::ANNEX_CLOUD_API_BASE_URL}/rewardlist/#{SpreeAnnexCloud.configuration.site_id}"
       response = HTTParty.get url, query: { access_token: SpreeAnnexCloud.configuration.access_token }
       return if response.blank? ||
-          response['error_code'] != '0' ||
-          response['reward_details'].blank?
+        response['error_code'] != '0' ||
+        response['reward_details'].blank?
 
       # Import rewards
       response['reward_details'].each do |resource|

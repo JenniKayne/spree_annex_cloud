@@ -62,6 +62,7 @@ module Spree
 
     def tier
       return if email.blank?
+
       @tier ||= Rails.cache.fetch("annex_cloud/user/tier/#{user_id}", expires_in: 1.hour) do
         resource = annex_cloud_get(api_tier_url)
         resource[:current_tier] if resource.present?

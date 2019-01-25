@@ -3,6 +3,7 @@ Spree::InventoryUnit.class_eval do
 
   def annex_cloud_after_return
     return unless saved_change_to_state? && state == 'returned' && variant.annex_cloud_reward?
+
     user = order.user
     return unless user.annex_cloud_registered?
 
