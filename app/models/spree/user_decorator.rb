@@ -23,9 +23,7 @@ Spree::User.class_eval do
       )
     else
       update_column(:annex_cloud_agree, true) unless annex_cloud_agree
-      if annex_cloud_user.blank?
-        update(annex_cloud_user: Spree::AnnexCloudUser.create!(annex_cloud_id: resource['user_id'], email: email))
-      end
+      update(annex_cloud_user: Spree::AnnexCloudUser.create!(annex_cloud_id: resource['user_id'], email: email)) if annex_cloud_user.blank?
     end
     SpreeAnnexCloud::UpdateAnnexCloudResource.perform_later annex_cloud_user
   end
@@ -41,21 +39,18 @@ Spree::User.class_eval do
   def synchronize_annex_cloud_agree_attribute
     return unless saved_change_to_annex_cloud_agree? && annex_cloud_agree
 
-    unless annex_cloud_user.present?
-      update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email)
-    end
+    update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email) unless annex_cloud_user.present?
     annex_cloud_user.register(opt_in: false)
   end
 
   def synchronize_annex_cloud_agree_attribute_after_create
-    unless annex_cloud_user.present?
-      update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email)
-    end
+    update annex_cloud_user: Spree::AnnexCloudUser.create!(email: email) unless annex_cloud_user.present?
     annex_cloud_user.register(opt_in: annex_cloud_agree)
   end
 
   def synchronize_annex_cloud_resource
     return unless annex_cloud_registered? && (saved_change_to_firstname? || saved_change_to_lastname? || saved_change_to_birthday?)
+
     SpreeAnnexCloud::UpdateAnnexCloudResource.perform_later annex_cloud_user
   end
 end

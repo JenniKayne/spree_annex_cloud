@@ -29,6 +29,7 @@ module Spree
 
       def load_reward
         return if params[:reward_id].nil?
+
         @reward = Spree::AnnexCloudReward.active.find_by(annex_cloud_id: params[:reward_id])
       end
 
