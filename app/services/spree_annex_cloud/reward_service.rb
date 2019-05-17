@@ -10,11 +10,20 @@ module SpreeAnnexCloud
 
     def call
       create_perform if create_allowed?
+    end
+
+    def create_allowed?
+      return false unless order.user.present? && reward.present?
+
+      enough_points? && can_redeem_free_reward?
+    end
+
+    def response
       if @error
-        return json_error(@error)
+        json_error(@error)
       else
         order.update_with_updater!
-        return json_success
+        json_success
       end
     end
 
@@ -35,12 +44,6 @@ module SpreeAnnexCloud
         return false
       end
       true
-    end
-
-    def create_allowed?
-      return false unless order.user.present? && reward.present?
-
-      enough_points? && can_redeem_free_reward?
     end
 
     def has_this_free_product?
