@@ -9,21 +9,13 @@ module SpreeAnnexCloud
     end
 
     def call
-      create_perform if create_allowed?
-    end
+      create_perform if create_allowed? && !reward.product.is_gift_card?
 
-    def create_allowed?
-      return false unless order.user.present? && reward.present?
-
-      enough_points? && can_redeem_free_reward?
-    end
-
-    def response
       if @error
-        json_error(@error)
+        return json_error(@error)
       else
         order.update_with_updater!
-        json_success
+        return json_success
       end
     end
 
@@ -39,14 +31,20 @@ module SpreeAnnexCloud
     end
 
     def can_redeem_free_reward?
-      if reward.points_required.zero? && has_this_free_product?
+      if reward.points_required.zero? && item_already_redeemed?
         @error = Spree.t('annex_cloud.already_redeem_free_product')
         return false
       end
       true
     end
 
-    def has_this_free_product?
+    def create_allowed?
+      return false unless order.user.present? && reward.present?
+
+      enough_points? && can_redeem_free_reward?
+    end
+
+    def item_already_redeemed?
       order.user.orders.joins(:line_items).
         where('spree_line_items.variant_id = ? AND spree_line_items.price = ?', reward.variant_id, 0.to_f).
         count.positive?
