@@ -8,8 +8,7 @@ module SpreeAnnexCloud
 
       raise "Failed Tracking Pixel #{gift_card[:number]}" unless response.present? && response.success?
     rescue StandardError => error
-      ExceptionNotifier.notify_exception(error)
-      raise error
+      Raven.capture_exception(error)
     end
   end
 end

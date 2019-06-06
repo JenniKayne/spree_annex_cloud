@@ -5,8 +5,7 @@ module SpreeAnnexCloud
     def perform(annex_cloud_user)
       annex_cloud_user.update_resource
     rescue StandardError => error
-      ExceptionNotifier.notify_exception(error)
-      raise error
+      Raven.capture_exception(error)
     end
   end
 end

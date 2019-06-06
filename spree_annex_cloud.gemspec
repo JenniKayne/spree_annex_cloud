@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'httparty'
   s.add_dependency 'spree_core', '>= 3.1.0', '< 4.0'
   s.add_dependency 'spree_extension'
-  s.add_dependency 'exception_notification'
+  s.add_dependency 'sentry-raven'
   s.add_dependency 'slack-notifier'
   s.add_dependency 'rack-cors'
 
