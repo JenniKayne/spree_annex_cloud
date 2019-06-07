@@ -6,6 +6,7 @@ en:
       not_enough_points: Not enough points to redeem the reward
       already_redeem_free_product: Cannot redeem this reward twice
       reward_added_to_cart: "%{name} has been added"
+      gift_card_redeemed: "%{name} has been redeemed"
     eligibility_errors:
       messages:
         user_not_registered_in_annex_cloud: Not registered for the Reward Program
