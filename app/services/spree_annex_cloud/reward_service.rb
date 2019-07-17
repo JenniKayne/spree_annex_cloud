@@ -9,7 +9,8 @@ module SpreeAnnexCloud
     end
 
     def call
-      create_perform if create_allowed? && !reward.product.is_gift_card?
+      create_perform if create_allowed?
+
       if @error
         return json_error(@error)
       else
