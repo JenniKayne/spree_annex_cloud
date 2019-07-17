@@ -5,8 +5,7 @@ module SpreeAnnexCloud
     def perform
       Spree::AnnexCloudReward.import if SpreeAnnexCloud.configuration.enabled
     rescue StandardError => error
-      ExceptionNotifier.notify_exception(error)
-      raise error
+      Raven.capture_exception(error)
     end
   end
 end

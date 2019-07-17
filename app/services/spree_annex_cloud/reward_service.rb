@@ -10,6 +10,7 @@ module SpreeAnnexCloud
 
     def call
       create_perform if create_allowed?
+
       if @error
         return json_error(@error)
       else
