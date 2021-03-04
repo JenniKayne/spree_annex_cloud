@@ -1,7 +1,11 @@
 <div class="page content__wrapper">
-  <div id="sa_refer_friend"></div>
+  <div id="sa_refer_friend">Currently Disabled</div>
 </div>
-<% if current_spree_user.present? %>
+
+<!-- -Commenting the AnnexCloud iframe -->
+<%
+=begin%>
+ <% if current_spree_user.present? %>
 <script type="text/javascript">
   var sa_uni = sa_uni || [];
   var sa_email = "<%= current_spree_user.email %>";
@@ -20,4 +24,6 @@
     }
   })();
 </script>
-<% end %>
+<% end %> 
+<%
+=end%>
