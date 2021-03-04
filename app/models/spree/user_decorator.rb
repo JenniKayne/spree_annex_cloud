@@ -3,9 +3,9 @@ Spree::User.class_eval do
 
   delegate :email, to: :annex_cloud_user, prefix: :annex_cloud
 
-  after_create :synchronize_annex_cloud_agree_attribute_after_create
-  after_update :synchronize_annex_cloud_agree_attribute
-  after_update :synchronize_annex_cloud_resource
+  # after_create :synchronize_annex_cloud_agree_attribute_after_create
+  # after_update :synchronize_annex_cloud_agree_attribute
+  # after_update :synchronize_annex_cloud_resource
 
   def annex_cloud_register_try
     return true if annex_cloud_registered?
