@@ -1,10 +1,23 @@
 <div class="page account content__wrapper" data-view="account">
   <%= render partial: 'spree/shared/account_nav', locals: { home: false } %>
   <div class="account__main">
-    <div id="socialannex_dashboard"></div>
+    <div id="socialannex_dashboard">
+      <div class="tile tile--small tile--text" style="width: 100%; margin-top: 3em;">
+          <h4 class="heading--1">Coming Soon</h4>
+          <div class="paragraph-sans" style="max-width: 500px;">
+            Jenni Kayne Rewards will be back soon (and better than ever).<br />
+            Don’t worry, all of your current points will be waiting for you once we relaunch.<br />
+            Stay tuned for its debut.<br />
+          </div>
+        </div>    
+    </div>
   </div>
 </div>
-<% if current_spree_user.present? %>
+
+<!-- -Commenting the AnnexCloud iframe -->
+<%
+=begin%>
+ <% if current_spree_user.present? %>
 <script type="text/javascript">
   var sa_uni = sa_uni || [];
   var sa_emailid = "<%= current_spree_user.email %>";
@@ -21,4 +34,6 @@
     window.addEventListener('load', sa_async_load(),false); }
   })();
 </script>
-<% end %>
+<% end %> 
+<%
+=end%>
